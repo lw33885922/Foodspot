@@ -1,0 +1,33 @@
+总体思路是通过api请求地址( apiUrl + appKey  + sign + paramMap )连接到大宗点评的数据，其中的数据被我这样解析： businesses是某一个商家businesses的详细数据，其中，restaurantObj = businesses.getJSONObject(i)是第i个商家的数据， restaurantObj.getString(name)获取名称，restaurantObj.getString(address)获取地址。那么，restaurant.getString（telephone）电话,restaurant.getString(categories)菜的种类，西餐还是中餐，其中还有review_list_url是商户点评链接地址，
+avg_rating是星级评分，rating_img_url是商户的星级，product_grade是口味评价
+。。。。。。。。。还有很多。
+
+
+解析JSON数据：
+JSONObject jsonObject = new JSONObject(response);
+int mcount = jsonObject.getInt("count");
+JSONArray businesses = jsonObject.getJSONArray("businesses");
+for(int i=0; i<mcount; i++) {
+JSONObject restaurantObj = businesses.getJSONObject(i);
+aveRestaurantInfo(foodieDB, restaurantObj.getString("name"),  restaurantObj.getString("address"));
+}
+
+初始化paramMap中的数据：
+private void initParamMap() {
+	paramMap.put("category", "美食");
+	paramMap.put("city", titleTextData);
+        paramMap.put("sort", "1");
+        paramMap.put("limit", "20");
+        paramMap.put("out_offset_type", "1");      
+        paramMap.put("platform", "2");
+}  
+
+1.MainActivity.java中的onDestroy()函数需要从数据库中delay餐厅数据 （仿照FoodieDB.java中的saveRestaurant()写个delayRestaurant() ）；
+2.restaurant数据库中添加餐厅的很多的那个详细的介绍页面（重点）；
+
+
+
+
+
+参考数据：
+{"status":"OK","count":1,"businesses":[{"business_id":6162303,"name":"70后饭吧(这是一条测试商户数据，仅用于测试开发，开发完成后请申请正式数据...)","branch_name":"中环百联店","address":"普陀区真光路1288号百联中环购物广场4楼","telephone":"021-61397933","city":"上海","regions":["普陀区","梅川路"],"categories":["本帮江浙菜","川菜/家常菜"],"latitude":31.245836,"longitude":121.38308,"avg_rating":0.0,"rating_img_url":"http://i2.dpfile.com/s/i/app/api/32_0star.png","rating_s_img_url":"http://i2.dpfile.com/s/i/app/api/16_0star.png","product_grade":0,"decoration_grade":0,"service_grade":0,"product_score":0.0,"decoration_score":0.0,"service_score":0.0,"review_count":0,"review_list_url":"http://lite.m.dianping.com/UL5B7bvLo3","avg_price":0,"business_url":"http://lite.m.dianping.com/AdhEu7iWAG","photo_url":"http://i2.dpfile.com/pc/ec4da8087c5baacd0049b132c98e83ca(700x700)/thumb.jpg","s_photo_url":"http://i1.dpfile.com/pc/ec4da8087c5baacd0049b132c98e83ca(278x200)/thumb.jpg","photo_count":3387,"photo_list_url":"http://lite.m.dianping.com/yH1P5RmfRk","has_coupon":0,"coupon_id":0,"coupon_description":"","coupon_url":"","has_deal":0,"deal_count":0,"deals":[],"has_online_reservation":0,"online_reservation_url":"","hours":"周一—周五 ：午市11：00—14：00   晚市17：00—22：00 周六—周日 ：午市11：00—14：30   晚市16：30—22：00","popular_dishes":"妈妈蛋蒸肉,椒麻鸡,口水虾,土汉堡,上酱肥牛,面包诱惑,臭豆腐,海鲜泡饭,蛋黄南瓜,菠萝油条,手撕包菜,大盆蛙,麦乳精,馋嘴牛蛙,火焰虾,土豆泥,酱椒鱼头王,碳烤肉,王老汉臭豆腐,口水鸡","specialties":"无线上网,可以刷卡,朋友聚餐,随便吃吃,家庭聚会,免费停车,情侣约会,休闲小憩,有下午茶,可送外卖"}]}
