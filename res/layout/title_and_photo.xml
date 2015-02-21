@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/activity_title_layout_height"
+    android:background="#eee" >
+
+    <ImageView
+        android:id="@+id/iv_app"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:paddingLeft="5dp"
+        android:src="@drawable/icon"
+         />
+
+    <TextView 
+        android:id="@+id/tv_title_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="3dp"
+        android:textSize="@dimen/title_textSize"
+        />
+    
+</LinearLayout>

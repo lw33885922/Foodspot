@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:hyman="http://schemas.android.com/apk/res/com.jae.foodie"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <view.SlidingMenu
+        android:id="@+id/id_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_frame_background"
+        hyman:rightPadding="80dp" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <include layout="@layout/left_menu" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" 
+                android:background="#fff"
+                android:orientation="vertical"  >
+                
+                <include layout="@layout/title" />
+                <ListView
+   					 android:id="@+id/lv_main"
+   					 android:layout_width="match_parent"
+   					 android:layout_height="match_parent" 
+					 />  	
+					                          
+            </LinearLayout>
+        </LinearLayout>
+    </view.SlidingMenu>
+</RelativeLayout>

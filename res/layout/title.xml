@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/activity_title_layout_height"
+    android:background="#eee" >
+
+    <Button
+        android:onClick="toggleMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title_textSize"
+        android:text="菜单" />
+
+    <TextView
+        android:id="@+id/et_title_text"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:paddingLeft="60dp"
+        android:layout_weight="1"
+        android:text="中山市"
+        android:textSize="@dimen/title_textSize" />
+
+    <Button
+        android:id="@+id/btn_title_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textSize="@dimen/title_textSize"
+        android:text="搜索" />
+
+</LinearLayout>
