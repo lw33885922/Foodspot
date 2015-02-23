@@ -3,13 +3,21 @@ avg_rating是星级评分，rating_img_url是商户的星级，product_grade是口味评价
 。。。。。。。。。还有很多。
 
 
+Utility中的handleRestaurantResponse:
 解析JSON数据：
 JSONObject jsonObject = new JSONObject(response);
 int mcount = jsonObject.getInt("count");
 JSONArray businesses = jsonObject.getJSONArray("businesses");
 for(int i=0; i<mcount; i++) {
 JSONObject restaurantObj = businesses.getJSONObject(i);
-aveRestaurantInfo(foodieDB, restaurantObj.getString("name"),  restaurantObj.getString("address"));
+saveRestaurantInfo(foodieDB, restaurantObj.getString("name"),  restaurantObj.getString("address"));
+}
+
+public static void saveRestaurantInfo(FoodieDB foodieDB, String name, String address) {
+Restaurant restaurant = new Restaurant();
+restaurant.setName(name);
+restaurant.setAddress(address);
+foodieDB.saveRestaurant(restaurant);
 }
 
 初始化paramMap中的数据：
@@ -22,8 +30,13 @@ private void initParamMap() {
         paramMap.put("platform", "2");
 }  
 
-1.MainActivity.java中的onDestroy()函数需要从数据库中delay餐厅数据 （仿照FoodieDB.java中的saveRestaurant()写个delayRestaurant() ）；
+1.MainActivity.java中的onDestroy()函数需要从数据库中delay餐厅数据 （写个delayRestaurant()）；(已解决)
 2.restaurant数据库中添加餐厅的很多的那个详细的介绍页面（重点）；
+
+(1)先设计好页面显示的数据，layout里的fragment_search；
+(2)只需设计一个网页activity,把获取到的商户的business_url链接加载就ok了。            business_url":"http://lite.m.dianping.com/AdhEu7iWAG
+注意：做到MainActivity.java的queryRestaurants(),提示空指针错误
+
 
 
 

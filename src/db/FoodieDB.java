@@ -36,8 +36,17 @@ public class FoodieDB {
 			ContentValues values = new ContentValues();
 			values.put("restaurant_name", restaurant.getName());
 			values.put("restaurant_address", restaurant.getAddress());
+			values.put("restaurant_url", restaurant.getUrl());
 			db.insert("Restaurant", null, values);
 		} 
+	}
+	
+	public void deleteRestaurant() {
+		db.delete("Restaurant", "id >= ?",  new String[]{"0"});
+	}
+	
+	public boolean deleteDatabase(Context context) {
+		return context.deleteDatabase(DB_NAME);
 	}
 	
 	public List<Restaurant> loadRestaurants() {
@@ -49,6 +58,7 @@ public class FoodieDB {
 				restaurant.setName(cursor.getString(cursor.getColumnIndex("restaurant_name")));
 				restaurant.setId(R.drawable.icon);
 				restaurant.setAddress(cursor.getString(cursor.getColumnIndex("restaurant_address")));
+				restaurant.setUrl(cursor.getString(cursor.getColumnIndex("restaurant_url")));
 				list.add(restaurant);
 			} while(cursor.moveToNext());
 		}

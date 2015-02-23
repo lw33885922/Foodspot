@@ -38,8 +38,9 @@ import api.FoodieApi;
     private ListView listView;
     private Map<String, String> paramMap = new HashMap<String, String>();
     private List<Restaurant> datasList = new ArrayList<Restaurant>();
-    private List<Restaurant> restaurantList;
-    private SlidingMenu mLeftMenu ;
+    private List<Restaurant> restaurantList = null;
+    private List<String> urlList = null;
+    private SlidingMenu mLeftMenu;
     private Button mTitleSearchButton;
     
     private RelativeLayout mMenu1;
@@ -62,6 +63,7 @@ import api.FoodieApi;
         Intent intent = getIntent();
         titleTextData =intent.getStringExtra("extra_data");
         mtitleTextView.setText(titleTextData);
+        mtitleTextView.setOnClickListener(this);
         
         initParamMap(); 
         initView();
@@ -83,6 +85,7 @@ import api.FoodieApi;
 				titleTextData = "餐厅信息";
 				Intent intent = new Intent(MainActivity.this, MenuActivity.class);
 				intent.putExtra("titleText_data", titleTextData);
+				//intent.putExtra("restaurant_url", urlList.get(position));
 				startActivity(intent);
 			}
 		});
@@ -104,6 +107,11 @@ import api.FoodieApi;
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.et_title_text:
+			//删除数据库中的所有数据
+			foodieDB.deleteRestaurant();
+			MainActivity.this.finish();
+			break;
 		case R.id.btn_title_search:
 			titleTextData = "搜索";
 			Intent intent1 = new Intent(MainActivity.this, MenuActivity.class);
@@ -148,7 +156,8 @@ import api.FoodieApi;
     		datasList.clear();
     		for(Restaurant restaurant : restaurantList) {
     			datasList.add(restaurant);
-    		}	
+    			//urlList.add(restaurant.getUrl());//错误
+    		}	  		
     		adapter.notifyDataSetChanged();
     		listView.setSelection(0);	
     	} else {
@@ -233,16 +242,12 @@ import api.FoodieApi;
         paramMap.put("out_offset_type", "1");      
         paramMap.put("platform", "2");
 	}  
+
 	
-	/**
-     * 释放数据，清除餐厅数据
-     */
 	@Override
 	protected void onDestroy() {
-		paramMap.clear();
-		adapter.clear();
-		datasList.clear();
-		//？？delay餐厅数据从数据库中  仿照FoodieDB.java中的saveRestaurant()写个delayRestaurant() 
+		//删除数据库中的所有数据
+		foodieDB.deleteRestaurant();
 		super.onDestroy();
 	}
 }

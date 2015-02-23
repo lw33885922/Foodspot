@@ -19,7 +19,7 @@ public class Utility {
 				JSONArray businesses = jsonObject.getJSONArray("businesses");
 				for(int i=0; i<mcount; i++) {
 					JSONObject restaurantObj = businesses.getJSONObject(i);
-					saveRestaurantInfo(foodieDB, restaurantObj.getString("name"),  restaurantObj.getString("address"));
+					saveRestaurantInfo(foodieDB, restaurantObj.getString("name"),  restaurantObj.getString("address"), restaurantObj.getString("business_url"));
 				}			
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -50,10 +50,11 @@ public class Utility {
 		return status;
 	}
 
-	public static void saveRestaurantInfo(FoodieDB foodieDB, String name, String address) {
+	public static void saveRestaurantInfo(FoodieDB foodieDB, String name, String address, String url) {
 		Restaurant restaurant = new Restaurant();
 		restaurant.setName(name);
 		restaurant.setAddress(address);
+		restaurant.setUrl(url); 
 		foodieDB.saveRestaurant(restaurant);
 	}
 }

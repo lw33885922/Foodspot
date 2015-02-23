@@ -5,6 +5,7 @@ public class Restaurant {
 	private int id;
 	private String name;
 	private String address;
+	private String url;
 
 	public Restaurant() {
 	}
@@ -31,5 +32,13 @@ public class Restaurant {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

@@ -21,7 +21,7 @@ public class ChooseCityActivity extends Activity {
 	private Button mButton;
 	private String extraData;
 	private String item;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

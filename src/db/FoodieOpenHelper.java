@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class FoodieOpenHelper extends SQLiteOpenHelper {
 
-	private static final String CREATE_RESTAURANT = "create table Restaurant ("+" id integer primary key autoincrement,"+"restaurant_name text,"+"restaurant_address text)";
+	private static final String CREATE_RESTAURANT = "create table Restaurant ("+" id integer primary key autoincrement,"+"restaurant_name text,"+"restaurant_address text,"+"restaurant_url text)";
 	private static final String CREATE_CITY = "create table City ("+" id integer primary key autoincrement,"+"city_name text)";
 	
 	public FoodieOpenHelper(Context context, String name,

@@ -9,16 +9,17 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.TextView;
 
 public class MenuActivity extends Activity {
 	
-	private TextView mTextView;
 	private TextView mTitleName;
+	private String restaurantUrl;
+	private int flag = 10;
 	
-	private int flag;
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -28,6 +29,9 @@ public class MenuActivity extends Activity {
 		Intent intent = getIntent();
 		String titleTextName = intent.getStringExtra("titleText_data");	
 		mTitleName.setText(titleTextName);
+	    
+		restaurantUrl = intent.getStringExtra("restaurant_url");
+		
 		if(titleTextName.equals("搜索")) {
 			flag = 0;
 		} else if(titleTextName.equals("我的")) {
@@ -44,6 +48,7 @@ public class MenuActivity extends Activity {
 		InfoFragment infoFragment = new InfoFragment();
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
+			
 		switch (flag) {
 		case 0:
 			transaction.replace(R.id.frag_container, searchFragment);
@@ -60,7 +65,7 @@ public class MenuActivity extends Activity {
 			transaction.commit();
 			break;
 			
-		case 3:
+		case 3:			
 			transaction.replace(R.id.frag_container, infoFragment);
 			transaction.commit();
 			break;
@@ -68,9 +73,14 @@ public class MenuActivity extends Activity {
 		default:
 			break;
 		}
-	
-		//String editTextData = intent.getStringExtra("extra_data");
-		//mTextView = (TextView) findViewById(R.id.tv_extra_data);
-		//mTextView.setText(editTextData);		
+		
+		//设置标题返回按钮
+		mTitleName.setOnClickListener(new OnClickListener() {
+							
+			@Override
+			public void onClick(View v) {
+				MenuActivity.this.finish();
+			}
+		});
 	}
 }

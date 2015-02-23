@@ -21,4 +21,9 @@ public class SearchFragment extends Fragment {
 	public void onDestroyView() {
 		super.onDestroyView();
 	}
+	
+	@Override
+	public void onDetach() {
+		super.onDetach();
+	}
 }
