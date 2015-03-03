@@ -24,7 +24,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/icon" />
+                android:src="@drawable/img1" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/icon" />
+                android:src="@drawable/img2" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@id/id_img2"
-                android:text="我的"
+                android:text="我的收藏"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
         </RelativeLayout>
@@ -78,7 +78,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/icon" />
+                android:src="@drawable/img3" />
 
             <TextView
                 android:layout_width="wrap_content"

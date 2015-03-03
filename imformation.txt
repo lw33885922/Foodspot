@@ -1,6 +1,4 @@
-总体思路是通过api请求地址( apiUrl + appKey  + sign + paramMap )连接到大宗点评的数据，其中的数据被我这样解析： businesses是某一个商家businesses的详细数据，其中，restaurantObj = businesses.getJSONObject(i)是第i个商家的数据， restaurantObj.getString(name)获取名称，restaurantObj.getString(address)获取地址。那么，restaurant.getString（telephone）电话,restaurant.getString(categories)菜的种类，西餐还是中餐，其中还有review_list_url是商户点评链接地址，
-avg_rating是星级评分，rating_img_url是商户的星级，product_grade是口味评价
-。。。。。。。。。还有很多。
+总体思路是通过api请求地址( apiUrl + appKey  + sign + paramMap )连接到大宗点评的数据，其中的数据被我这样解析： businesses是某一个商家businesses的详细数据，其中，restaurantObj = businesses.getJSONObject(i)是第i个商家的数据， restaurantObj.getString(name)获取名称，restaurantObj.getString(address)获取地址。
 
 
 Utility中的handleRestaurantResponse:
@@ -22,22 +20,18 @@ foodieDB.saveRestaurant(restaurant);
 
 初始化paramMap中的数据：
 private void initParamMap() {
-	paramMap.put("category", "美食");
-	paramMap.put("city", titleTextData);
-        paramMap.put("sort", "1");
-        paramMap.put("limit", "20");
-        paramMap.put("out_offset_type", "1");      
-        paramMap.put("platform", "2");
+paramMap.put("category", "美食");
+paramMap.put("city", titleTextData);
+paramMap.put("sort", "1");
+paramMap.put("limit", "20");
+paramMap.put("out_offset_type", "1");      
+paramMap.put("platform", "2");
 }  
 
 1.MainActivity.java中的onDestroy()函数需要从数据库中delay餐厅数据 （写个delayRestaurant()）；(已解决)
-2.restaurant数据库中添加餐厅的很多的那个详细的介绍页面（重点）；
-
+2.restaurant数据库中添加餐厅的很多的那个详细的介绍页面（重点）。（解决）
 (1)先设计好页面显示的数据，layout里的fragment_search；
-(2)只需设计一个网页activity,把获取到的商户的business_url链接加载就ok了。            business_url":"http://lite.m.dianping.com/AdhEu7iWAG
-注意：做到MainActivity.java的queryRestaurants(),提示空指针错误
-
-
+(2)只需设计一个网页activity,把获取到的商户的business_url链接加载就ok了。            
 
 
 

@@ -12,9 +12,12 @@ import android.webkit.WebViewClient;
 
 public class InfoFragment extends Fragment {
 	
+	private String restaurantUrl;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		restaurantUrl = getFragmentManager().findFragmentByTag("110").getArguments().getString("restaurant_url");
 		View view = inflater.inflate(R.layout.fragment_info, container,false);
 		WebView webView = (WebView)view.findViewById(R.id.wv_info);
 		webView.getSettings().setJavaScriptEnabled(true);
@@ -25,7 +28,7 @@ public class InfoFragment extends Fragment {
 				return true;
 			}
 		});
-		webView.loadUrl("http://www.baidu.com");
+		webView.loadUrl(restaurantUrl);
 		return view;
 	}
 	

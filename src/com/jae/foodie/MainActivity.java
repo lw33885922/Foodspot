@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -39,7 +40,7 @@ import api.FoodieApi;
     private Map<String, String> paramMap = new HashMap<String, String>();
     private List<Restaurant> datasList = new ArrayList<Restaurant>();
     private List<Restaurant> restaurantList = null;
-    private List<String> urlList = null;
+    private List<String> urlList = new ArrayList<String>();
     private SlidingMenu mLeftMenu;
     private Button mTitleSearchButton;
     
@@ -47,16 +48,20 @@ import api.FoodieApi;
     private RelativeLayout mMenu2;
     private RelativeLayout mMenu3;
     
-    private String titleTextData;
+    private String titleTextData = null;
     private TextView mtitleTextView;
+    private int status = 0;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-
+        
+        Log.e("haha","mainActivity oncreate");
         foodieDB = FoodieDB.getInstance(this);
+        if(status == 0)
+        	foodieDB.deleteRestaurant();
         
         //获取标题
         mtitleTextView = (TextView) findViewById(R.id.et_title_text);
@@ -85,7 +90,7 @@ import api.FoodieApi;
 				titleTextData = "餐厅信息";
 				Intent intent = new Intent(MainActivity.this, MenuActivity.class);
 				intent.putExtra("titleText_data", titleTextData);
-				//intent.putExtra("restaurant_url", urlList.get(position));
+				intent.putExtra("restaurant_url", urlList.get(position));
 				startActivity(intent);
 			}
 		});
@@ -108,26 +113,23 @@ import api.FoodieApi;
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.et_title_text:
+			status = 0;
 			//删除数据库中的所有数据
 			foodieDB.deleteRestaurant();
 			MainActivity.this.finish();
-			break;
-		case R.id.btn_title_search:
-			titleTextData = "搜索";
-			Intent intent1 = new Intent(MainActivity.this, MenuActivity.class);
-			intent1.putExtra("titleText_data", titleTextData);
-			startActivity(intent1);
 			break;
 		case R.id.menu1:
 			mLeftMenu.toggle();
 			break;
 		case R.id.menu2:
-			titleTextData = "我的";
+			status = 1;
+			titleTextData = "我的收藏";
 			Intent intent2 = new Intent(MainActivity.this, MenuActivity.class);
 			intent2.putExtra("titleText_data", titleTextData);
 			startActivity(intent2);
 			break;
 		case R.id.menu3:
+			status = 1;
 			titleTextData = "更多";
 			Intent intent3 = new Intent(MainActivity.this, MenuActivity.class);
 			intent3.putExtra("titleText_data", titleTextData);
@@ -156,8 +158,8 @@ import api.FoodieApi;
     		datasList.clear();
     		for(Restaurant restaurant : restaurantList) {
     			datasList.add(restaurant);
-    			//urlList.add(restaurant.getUrl());//错误
-    		}	  		
+    			urlList.add(restaurant.getUrl());
+    		}
     		adapter.notifyDataSetChanged();
     		listView.setSelection(0);	
     	} else {
@@ -235,8 +237,6 @@ import api.FoodieApi;
 	private void initParamMap() {
 		paramMap.put("category", "美食");
 		paramMap.put("city", titleTextData);
-        //paramMap.put("latitude", "31.18268013000488");
-        //paramMap.put("longitude", "121.42769622802734");
         paramMap.put("sort", "1");
         paramMap.put("limit", "20");
         paramMap.put("out_offset_type", "1");      
@@ -246,8 +246,6 @@ import api.FoodieApi;
 	
 	@Override
 	protected void onDestroy() {
-		//删除数据库中的所有数据
-		foodieDB.deleteRestaurant();
 		super.onDestroy();
 	}
 }

@@ -29,14 +29,12 @@ public class MenuActivity extends Activity {
 		Intent intent = getIntent();
 		String titleTextName = intent.getStringExtra("titleText_data");	
 		mTitleName.setText(titleTextName);
-	    
-		restaurantUrl = intent.getStringExtra("restaurant_url");
 		
 		if(titleTextName.equals("搜索")) {
 			flag = 0;
-		} else if(titleTextName.equals("我的")) {
+		} else if(titleTextName.equals("我的收藏")) {
 			flag = 1;
-		} else if(titleTextName.equals("更多")){
+		} else if(titleTextName.equals("更多")) {
 			flag = 2;
 		} else {
 			flag = 3;
@@ -65,7 +63,12 @@ public class MenuActivity extends Activity {
 			transaction.commit();
 			break;
 			
-		case 3:			
+		case 3:
+			restaurantUrl = intent.getStringExtra("restaurant_url");
+			Bundle bundle = new Bundle();
+			bundle.putString("restaurant_url", restaurantUrl);
+			infoFragment.setArguments(bundle);
+			transaction.add(infoFragment, "110");
 			transaction.replace(R.id.frag_container, infoFragment);
 			transaction.commit();
 			break;
